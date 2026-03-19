@@ -1,9 +1,10 @@
 package trivia;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
-// REFACTOR ME
+
 public class Game implements IGame {
    ArrayList<Player> players = new ArrayList();
    LinkedList popQuestions = new LinkedList();
@@ -19,13 +20,11 @@ public class Game implements IGame {
          popQuestions.addLast("Pop Question " + i);
          scienceQuestions.addLast(("Science Question " + i));
          sportsQuestions.addLast(("Sports Question " + i));
-         rockQuestions.addLast(createRockQuestion(i));
+         rockQuestions.addLast("Rock Question " + i);
       }
    }
 
-   public String createRockQuestion(int index) {
-      return "Rock Question " + index;
-   }
+
 
    public boolean isPlayable() {
       return (howManyPlayers() >= 2);
@@ -45,8 +44,9 @@ public class Game implements IGame {
    }
 
    public void roll(int roll) {
-      System.out.println(players.get(currentPlayer).name + " is the current player");
       Player player = players.get(currentPlayer);
+      System.out.println(player.name + " is the current player");
+
       System.out.println("They have rolled a " + roll);
 
       if (player.inPenalty) {
@@ -73,28 +73,29 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      if (currentCategory() == "Pop")
-         System.out.println(popQuestions.removeFirst());
-      if (currentCategory() == "Science")
-         System.out.println(scienceQuestions.removeFirst());
-      if (currentCategory() == "Sports")
-         System.out.println(sportsQuestions.removeFirst());
-      if (currentCategory() == "Rock")
-         System.out.println(rockQuestions.removeFirst());
+      switch (currentCategory()) {
+         case "Pop": System.out.println(popQuestions.removeFirst());
+                     break;
+         case "Science": System.out.println(scienceQuestions.removeFirst());
+                     break;
+         case "Sports": System.out.println(sportsQuestions.removeFirst());
+                     break;
+         default: System.out.println(rockQuestions.removeFirst());
+      }
    }
 
 
    private String currentCategory() {
       Player player = players.get(currentPlayer);
-      if (player.place - 1 == 0) return "Pop";
-      if (player.place - 1 == 4) return "Pop";
-      if (player.place - 1 == 8) return "Pop";
-      if (player.place - 1 == 1) return "Science";
-      if (player.place - 1 == 5) return "Science";
-      if (player.place - 1 == 9) return "Science";
-      if (player.place - 1 == 2) return "Sports";
-      if (player.place - 1 == 6) return "Sports";
-      if (player.place - 1 == 10) return "Sports";
+      if (Arrays.asList(0, 4, 8).contains(player.place - 1)) {
+         return "Pop";
+      }
+      if (Arrays.asList(1, 5, 9).contains(player.place - 1)) {
+         return "Science";
+      }
+      if (Arrays.asList(2, 6, 10).contains(player.place - 1)) {
+         return "Sports";
+      }
       return "Rock";
    }
 
