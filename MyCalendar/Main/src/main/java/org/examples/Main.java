@@ -1,3 +1,7 @@
+package org.examples;
+
+import org.examples.event.Event;
+
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.List;
@@ -197,7 +201,7 @@ public class Main {
                         int minute2 = Integer.parseInt(scanner.nextLine());
                         System.out.print("Durée (en minutes) : ");
                         int duree2 = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Lieu :");
+                        System.out.println("org.examples.objets.Lieu :");
                         String lieu = scanner.nextLine();
                         
                         String participants = utilisateur;
